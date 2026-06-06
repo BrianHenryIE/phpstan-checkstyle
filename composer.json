@@ -1,0 +1,50 @@
+{
+    "name": "brianhenry/phpstan-checkstyle",
+    "description": "Reads a checkstyle report and prints it using PHPStan formatter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brian Henry",
+            "email": "BrianHenryIE@gmail.com"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "BrianHenryIE\\PhpstanCheckstyle\\": "src/"
+        }
+    },
+    "bin": ["bin/phpstan-checkstyle"],
+    "require": {
+        "ext-dom": "*",
+        "phpstan/phpstan": "^2.2.2",
+        "kamazee/pr-filter": "^1.1.0",
+        "mnapoli/silly": "^1.10.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6.34",
+        "dealerdirect/phpcodesniffer-composer-installer": "^v1.2.1",
+        "phpstan/phpstan-phpunit": "^2.0.16",
+        "phpcompatibility/php-compatibility": "^9.3.5",
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "rector/rector": "^2.4"
+    },
+    "scripts": {
+        "test-coverage": [
+            "Composer\\Config::disableProcessTimeout",
+            "if [ \"$XDEBUG_MODE\" != \"coverage\" ]; then echo \"Run with 'XDEBUG_MODE=coverage composer test-coverage'\"; exit 1; fi;",
+            "phpunit --coverage-text --coverage-clover tests/_reports/unitclover.xml --coverage-php tests/_reports/unitphp.cov --coverage-html tests/_reports/html -d memory_limit=-1 --order-by=random",
+            "if [ $(command -v php-coverage-badger) ]; then php-coverage-badger tests/_reports/clover.xml .github/coverage.svg; fi;",
+            "if [ $(command -v phpcov) ]; then git diff main...head > .phpunitcoverage.main.diff; phpcov patch-coverage --path-prefix $(pwd) ./tests/_reports/php.cov main.diff || true; fi;",
+            " if [ -f \".phpunitcoverage.main.diff\" ]; then rm .phpunitcoverage.main.diff; fi;",
+            "echo \"Run 'open ./tests/_reports/html/index.html' to view report.\""
+        ]
+    }
+}

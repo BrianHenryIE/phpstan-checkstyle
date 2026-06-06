@@ -1,0 +1,12 @@
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+
+parameters:
+    level: 10
+    paths:
+        - src
+        - tests
+    ignoreErrors:
+        - identifier: phpstanApi.constructor
+        - identifier: phpstanApi.classConstant
+        - identifier: phpstanApi.interface

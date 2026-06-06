@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+Phar::loadPhar(__DIR__ . '/../vendor/phpstan/phpstan/phpstan.phar', 'phpstan.phar');
+require 'phar://phpstan.phar/vendor/autoload.php';
+
+$app = new Silly\Application('phpstan-checkstyle', '1.0.0');
+$app->command(
+    'run [--format=] [infile]',
+    new \BrianHenryIE\PhpstanCheckstyle\Command\ConvertCommand(
+        new \BrianHenryIE\PhpstanCheckstyle\CheckstyleParser(),
+        new \BrianHenryIE\PhpstanCheckstyle\ErrorFormatter\FormatterFactory(),
+    ),
+)->descriptions('Convert a PHPStan checkstyle report to any PHPStan output format', [
+    'infile'   => 'Path to checkstyle XML file (reads from stdin if omitted)',
+    '--format' => 'Output format: table (default), json, checkstyle, github, gitlab, raw, junit, teamcity',
+]);
+$app->setDefaultCommand('run', true);
+$app->run();

@@ -1,0 +1,5 @@
+.*.secret
+.*.cache
+/vendor
+/.phpunitcoverage.main.diff
+/tests/_reports
