@@ -5,7 +5,7 @@ Reads a PHPStan generated checkstyle report and prints it using PHPStan's own ou
 Designed to sit at the end of a [kamazee/pr-filter](https://github.com/kamazee/pr-filter) pipeline, restoring the familiar PHPStan table format after filtering errors down to only those on changed lines.
 
 ```
-git diff $(git merge-base main) > tmp.diff; phpstan --error-format=checkstyle | sponge phpstan-checkstyle.xml | vendor/bin/prf diff.patch phpstan-checkstyle.xml phpstan-filtered-checkstyle.xml; vendor/bin/phpstan-checkstyle phpstan-filtered-checkstyle.xml
+git fetch origin; git diff $(git rev-parse origin/master) > tmp.diff; phpstan --error-format=checkstyle | sponge phpstan-checkstyle.xml | vendor/bin/prf filter-checkstyle tmp.diff phpstan-checkstyle.xml phpstan-filtered-checkstyle.xml; vendor/bin/phpstan-checkstyle phpstan-filtered-checkstyle.xml
 ```
 
 ## Installation
