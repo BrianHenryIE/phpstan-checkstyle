@@ -1,5 +1,5 @@
 {
-    "name": "brianhenry/phpstan-checkstyle",
+    "name": "brianhenryie/phpstan-checkstyle",
     "description": "Reads a checkstyle report and prints it using PHPStan formatter",
     "license": "MIT",
     "authors": [

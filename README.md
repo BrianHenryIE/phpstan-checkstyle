@@ -11,7 +11,7 @@ git diff $(git merge-base main) > tmp.diff; phpstan --error-format=checkstyle | 
 ## Installation
 
 ```bash
-composer require brianhenry/phpstan-checkstyle
+composer require brianhenryie/phpstan-checkstyle --dev
 ```
 
 ## Usage
