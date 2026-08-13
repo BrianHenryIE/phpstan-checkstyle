@@ -65,7 +65,7 @@ class ConvertCommand
         ?string $infile = null
     ): int {
         $xml = $infile !== null
-            ? (string) file_get_contents($infile)
+            ? (string) file_get_contents( getcwd() . '/' . ltrim($infile, '\\/' ))
             : (string) stream_get_contents(STDIN);
 
         $errors = $this->parser->parseXml($xml, $output->isVerbose());
