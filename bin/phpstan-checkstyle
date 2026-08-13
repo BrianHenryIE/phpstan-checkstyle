@@ -3,9 +3,20 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
+$vendorDirs = [
+    __DIR__ . '/../vendor',
+    __DIR__ . '/../../..'
+];
 
-Phar::loadPhar(__DIR__ . '/../vendor/phpstan/phpstan/phpstan.phar', 'phpstan.phar');
+foreach($vendorDirs as $vendorDirCandidate) {
+    if(file_exists($vendorDirCandidate . '/autoload.php')) {
+        $vendorDir = $vendorDirCandidate;
+    }
+}
+
+require_once $vendorDir . '/autoload.php';
+
+Phar::loadPhar($vendorDir. '/phpstan/phpstan/phpstan.phar', 'phpstan.phar');
 require 'phar://phpstan.phar/vendor/autoload.php';
 
 $app = new Silly\Application('phpstan-checkstyle', '1.0.0');
